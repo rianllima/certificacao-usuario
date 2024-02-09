@@ -1,7 +1,10 @@
 package com.rocketseat.certification_nlw.modules.students.controllers.entities;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,6 +30,9 @@ public class StudentEntity {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @OneToMany
+    @OneToMany(mappedBy = "studentEntity")
     private List<CertificationStudentsEntity> certificationStudentsEntity;
+
+     @CreationTimestamp
+    private LocalDateTime createdAt;
 }
