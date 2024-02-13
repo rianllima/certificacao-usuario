@@ -14,6 +14,7 @@ import com.rocketseat.certification_nlw.modules.students.entities.AnswersCertifi
 import com.rocketseat.certification_nlw.modules.students.entities.CertificationStudentEntity;
 import com.rocketseat.certification_nlw.modules.students.entities.StudentEntity;
 import com.rocketseat.certification_nlw.modules.students.dto.StudentCertificationAnswerDTO;
+import com.rocketseat.certification_nlw.modules.students.dto.VerifyHasCertificationDTO;
 import com.rocketseat.certification_nlw.modules.students.repositores.CertificationStudentRepository;
 import com.rocketseat.certification_nlw.modules.students.repositores.StudentRepository;
 
@@ -30,7 +31,16 @@ public class StudentCertificationAnswerUserCase {
     @Autowired
     private CertificationStudentRepository certificationStudentRepository;
 
-    public CertificationStudentEntity execute(StudentCertificationAnswerDTO dto){ 
+    @Autowired
+    private VerifyIfHasCertificationUseCase verifyIfHasCertificationUseCase;
+
+    public CertificationStudentEntity execute(StudentCertificationAnswerDTO dto) throws Exception{ 
+
+        var hasCertification = this.verifyIfHasCertificationUseCase.execute(new VerifyHasCertificationDTO(dto.getEmail(),dto.getTechnology()));
+
+        if(hasCertification){
+            throw new Exception("Você já tirou sua certificação!");
+        }
 
         List<QuestionEntity> questionsEntity = questionRepository.findByTechnology(dto.getTechnology());
         List<AnswersCertificationsEntity> answersCertifications = new ArrayList<>();
