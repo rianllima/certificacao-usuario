@@ -1,4 +1,4 @@
-package com.rocketseat.certification_nlw.modules.students.controllers.entities;
+package com.rocketseat.certification_nlw.modules.students.entities;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -20,6 +21,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "students")
+@Builder
 
 public class StudentEntity {
 
@@ -31,7 +33,7 @@ public class StudentEntity {
     private String email;
 
     @OneToMany(mappedBy = "studentEntity")
-    private List<CertificationStudentsEntity> certificationStudentsEntity;
+    private List<CertificationStudentEntity> certificationStudentsEntity;
 
      @CreationTimestamp
     private LocalDateTime createdAt;
