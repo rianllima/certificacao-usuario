@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,9 +30,9 @@ import lombok.NoArgsConstructor;
 @Builder
 
 public class CertificationStudentEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-
     private UUID id;
     
     @Column(length = 100)
@@ -48,6 +50,7 @@ public class CertificationStudentEntity {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "answer_certification_id", insertable = false, updatable = false)
+    @JsonManagedReference
     private List<AnswersCertificationsEntity> answersCertificationsEntities;  
 
      @CreationTimestamp
